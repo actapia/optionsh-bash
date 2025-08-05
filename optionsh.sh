@@ -5,9 +5,10 @@ fi
 
 function parse_args {
     local -n ARGS=$2
-    #declare -A ARGS
-    json_file="${1%.*}.json"
-    result="$(optionsh "$1" "${@:3}"< "$json_file")"
+    file="$(basename "$1")"
+    dir="$(dirname "$1")"
+    json_file="$dir/${file%.*}.json"
+    result="$(optionsh "$0" "${@:3}"< "$json_file")"
     exit_code=$?
     if [ $exit_code -ne 0 ]; then
 	echo "$result"
